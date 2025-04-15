@@ -33,15 +33,9 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
-}
-
-/* Ensure all interactive elements have proper z-index */
-button, a, input, select, textarea {
-  position: relative;
-  z-index: 1;
 }
 
 /* Custom Navigation Styles */
@@ -49,7 +43,6 @@ button, a, input, select, textarea {
   @apply relative;
   @apply text-gray-700;
   @apply transition-colors duration-200;
-  @apply cursor-pointer;
 }
 
 .nav-link::after {
@@ -89,28 +82,4 @@ button, a, input, select, textarea {
 
 .animate-slide-in {
   animation: slideIn 0.3s ease-in-out;
-}
-
-/* Ensure proper stacking context */
-#root {
-  isolation: isolate;
-}
-
-/* Fix pointer events */
-.pointer-events-auto {
-  pointer-events: auto !important;
-}
-
-/* Ensure buttons are clickable */
-button, 
-[role="button"],
-a {
-  @apply cursor-pointer;
-  @apply select-none;
-  @apply pointer-events-auto;
-}
-
-/* Fix dropdown menus */
-[data-radix-popper-content-wrapper] {
-  z-index: 50 !important;
 }

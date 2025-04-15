@@ -54,10 +54,6 @@ export function SignIn() {
       const { data: authData, error } = await signIn(data.email, data.password);
       
       if (error) {
-        if (error.code === 'NOT_FOUND') {
-          setError('Account not found. Please sign up first.');
-          return;
-        }
         if (error.message.includes('Invalid login credentials')) {
           setError('Invalid email or password. Please try again.');
           return;
@@ -102,14 +98,7 @@ export function SignIn() {
         <CardContent>
           {error && (
             <Alert variant="destructive" className="mb-4">
-              <AlertDescription>
-                {error}
-                {error.includes('sign up first') && (
-                  <Button variant="link" className="p-0 ml-2" asChild>
-                    <Link to="/get-started">Sign up here</Link>
-                  </Button>
-                )}
-              </AlertDescription>
+              <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
 

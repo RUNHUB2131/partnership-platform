@@ -18,14 +18,14 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-        <div className="min-h-screen bg-background flex flex-col relative">
+        <div className="min-h-screen bg-background flex flex-col">
           <Routes>
             <Route
               path="/"
               element={
                 <>
                   <Header />
-                  <main className="flex-grow pt-16 relative z-0">
+                  <main className="flex-grow pt-16">
                     <HeroSection />
                     <HowItWorks />
                     <TrustedBy />
@@ -39,7 +39,7 @@ function App() {
               element={
                 <>
                   <Header />
-                  <main className="flex-grow pt-16 relative z-0">
+                  <main className="flex-grow pt-16">
                     <PricingPage />
                   </main>
                   <Footer />

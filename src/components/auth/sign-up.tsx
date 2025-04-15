@@ -17,7 +17,7 @@ import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { RunhubLogo } from '@/components/ui/runhub-logo';
 import { SunIcon as RunIcon, HeartHandshakeIcon, Eye, EyeOff } from 'lucide-react';
-import { signUp, signIn } from '@/lib/auth';
+import { signUp } from '@/lib/auth';
 import type { UserRole } from '@/lib/types';
 
 const signUpSchema = z.object({
@@ -50,40 +50,20 @@ export function SignUp() {
       setLoading(true);
       setError(null);
       
-      // First sign up the user
-      const { error: signUpError } = await signUp(data.email, data.password, role);
+      const { error } = await signUp(data.email, data.password, role);
       
-      if (signUpError) {
-        if (signUpError.message.includes('already registered')) {
+      if (error) {
+        if (error.message.includes('already registered')) {
           setError('This email is already registered. Please sign in instead.');
           return;
         }
-        throw signUpError;
+        throw error;
       }
-
-      // Wait a moment for the profile to be created
-      await new Promise(resolve => setTimeout(resolve, 1500));
       
-      // Then sign them in
-      const { data: signInData, error: signInError } = await signIn(data.email, data.password);
-      
-      if (signInError) {
-        throw signInError;
-      }
-
-      if (!signInData?.profile?.role) {
-        throw new Error('Failed to retrieve user profile');
-      }
-
-      toast.success('Account created successfully! Redirecting to dashboard...');
-      
-      // Navigate to the appropriate dashboard
-      navigate(`/dashboard/${signInData.profile.role}`);
-      
-      // Reset form
-      form.reset();
+      toast.success('Account created successfully! Please sign in.');
+      navigate('/signin');
     } catch (error) {
-      console.error('Error during signup:', error);
+      console.error('Error signing up:', error);
       setError('Failed to create account. Please try again.');
     } finally {
       setLoading(false);
